@@ -42,7 +42,9 @@ class Buttons extends StatelessWidget {
                      width: 4.0,
                       color: Color.fromARGB(58, 51, 49, 49),
                     )),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, "/offline");
+                  },
                   child:const Text(
                     "Çevrimdışı Mod",
                     style: TextStyle(

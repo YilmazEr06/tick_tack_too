@@ -1,7 +1,17 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:tick_tack_too/screens/modescreen.dart';
+import 'package:tick_tack_too/screens/modescrenn/modescreen.dart';
+import 'package:tick_tack_too/screens/offlinemodescreen/offlinemodescreen.dart';
+import 'package:window_manager/window_manager.dart';
 
-void main() {
+Future<void> main() async {
+ WidgetsFlutterBinding.ensureInitialized();
+  
+  if (Platform.isWindows) {
+    await windowManager.ensureInitialized();
+    WindowManager.instance.setMinimumSize(const Size(600, 800));
+    WindowManager.instance.setMaximumSize(const Size(600, 800));
+  }
   runApp(const MyApp());
 }
 
@@ -12,6 +22,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+      '/modes':(context)=>modescreen(),
+      '/offline':(context)=>Offlinemodescreen(),
+      '/online':(context)=>Offlinemodescreen(),
+    },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(

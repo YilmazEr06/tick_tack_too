@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tick_tack_too/companents/Buttons.dart';
-import 'package:tick_tack_too/companents/tick_tack_too_bar.dart';
-import 'package:tick_tack_too/companents/xando/o.dart';
-import 'package:tick_tack_too/companents/xando/x.dart';
+import 'package:tick_tack_too/screens/modescrenn/companents/Buttons.dart';
+import 'package:tick_tack_too/screens/modescrenn/companents/tick_tack_too_bar.dart';
+import 'package:tick_tack_too/companents/xando/oanimated.dart';
+import 'package:tick_tack_too/companents/xando/xanimated.dart';
 
 class modescreen extends StatefulWidget {
   const modescreen({super.key});
