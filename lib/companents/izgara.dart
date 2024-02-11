@@ -11,11 +11,13 @@ class createizgara extends StatefulWidget {
     required this.nextuser,
     required this.next,
     required this.check,
+    required this.seeskor,
   });
   final double top;
   final double left;
   final VoidCallback nextuser;
   final void Function(Map map) check;
+  final void Function(Map map) seeskor;
 
   final bool next;
   @override
@@ -25,6 +27,7 @@ class createizgara extends StatefulWidget {
 class _createoState extends State<createizgara>
     with SingleTickerProviderStateMixin {
   late Gradient gradient;
+  int sayac = 0;
   Map status = {
     "x": {
       'oneone': false,
@@ -49,6 +52,7 @@ class _createoState extends State<createizgara>
       'threethree': false
     }
   };
+  Map skor = {"x": 0, "o": 0};
 
   @override
   void dispose() {
@@ -67,7 +71,7 @@ class _createoState extends State<createizgara>
 
   @override
   Widget build(BuildContext context) {
-    Color inkwellbackcolor = Color.fromARGB(41, 242, 21, 5);
+    Color inkwellbackcolor = Color.fromARGB(0, 242, 21, 5);
     return Stack(children: [
       Positioned(
           top: widget.top,
@@ -111,6 +115,7 @@ class _createoState extends State<createizgara>
           width: 100,
           color: inkwellbackcolor,
           child: InkWell(
+            splashColor: Colors.transparent,
             child: xoro(index),
             onTap: () {
               setState(() {
@@ -121,8 +126,9 @@ class _createoState extends State<createizgara>
                   } else {
                     status["o"][index] = true;
                   }
+                  sayac = sayac + 1;
                   widget.nextuser();
-                  check(status, context, refresh);
+                  check(status, context, refresh, skor, widget.seeskor, sayac);
                 }
               });
             },
@@ -135,36 +141,52 @@ class _createoState extends State<createizgara>
       : ((status["o"][a]) ? const createonoanimation() : const SizedBox()));
 
   void refresh() {
-    setState(() {
-      status = {
-        "x": {
-          'oneone': false,
-          'onetwo': false,
-          'onethree': false,
-          'twoone': false,
-          'twotwo': false,
-          'twothree': false,
-          'threeone': false,
-          'threetwo': false,
-          'threethree': false
-        },
-        "o": {
-          'oneone': false,
-          'onetwo': false,
-          'onethree': false,
-          'twoone': false,
-          'twotwo': false,
-          'twothree': false,
-          'threeone': false,
-          'threetwo': false,
-          'threethree': false
-        }
-      };
-    });
+    setState(
+      () {
+        status = {
+          "x": {
+            'oneone': false,
+            'onetwo': false,
+            'onethree': false,
+            'twoone': false,
+            'twotwo': false,
+            'twothree': false,
+            'threeone': false,
+            'threetwo': false,
+            'threethree': false
+          },
+          "o": {
+            'oneone': false,
+            'onetwo': false,
+            'onethree': false,
+            'twoone': false,
+            'twotwo': false,
+            'twothree': false,
+            'threeone': false,
+            'threetwo': false,
+            'threethree': false
+          }
+        };
+      },
+    );
+    sayac = 0;
   }
 }
 
-void check(Map status, BuildContext context, VoidCallback refresh) {
+void check(Map status, BuildContext context, VoidCallback refresh, Map skor,
+    final void Function(Map map) seeskor, int sayac) {
+  if (sayac == 9) {
+    showDialog(
+      context: context,
+      builder: (_) => Createwhowin(
+        whowin: "Berabere",
+        size: 50,
+        top: 100,
+        left: 40,
+      ),
+    );
+    refresh();
+  }
   for (var i in ["o", "x"]) {
     if ((status[i]["oneone"] & status[i]["onetwo"] & status[i]["onethree"]) ||
         (status[i]["twoone"] & status[i]["twotwo"] & status[i]["twothree"]) ||
@@ -182,9 +204,14 @@ void check(Map status, BuildContext context, VoidCallback refresh) {
         context: context,
         builder: (_) => Createwhowin(
           whowin: i,
+          size: 150,
+          top: 50,
+          left: 90,
         ),
       );
       refresh();
+      skor[i] = skor[i] + 1;
+      seeskor(skor);
     }
   }
 }

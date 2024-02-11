@@ -14,12 +14,19 @@ class Offlinemodescreen extends StatefulWidget {
 // ignore: camel_case_types
 class modescreenstate extends State<Offlinemodescreen> {
   bool whichnext = false;
+  int skoro=0;
+   int skorx=0;
+  @override
+  void initState() {
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
     double height = MediaQuery.sizeOf(context).height;
-
+    
     next() {
       setState(() {
        whichnext=!whichnext;
@@ -27,7 +34,13 @@ class modescreenstate extends State<Offlinemodescreen> {
     }
     check(Map map) {
       setState(() {
-       whichnext=!whichnext;
+      
+      });
+    }
+     skor(Map map) {
+      setState(() {
+        skoro= map["o"];
+       skorx=map["x"];
       });
     }
 
@@ -35,6 +48,7 @@ class modescreenstate extends State<Offlinemodescreen> {
         body: Stack(
       fit: StackFit.expand,
       children: [
+        
         createx(
             top: height * 0.2,
             left: width * 0.05,
@@ -96,13 +110,14 @@ class modescreenstate extends State<Offlinemodescreen> {
             minsize: 80,
             colors: const [Colors.yellow, Colors.black]),
         const logo(),
-        sequencebar(whichnext: whichnext),
+        sequencebar(whichnext: whichnext,skorx: skorx,skoro: skoro,),
         createizgara(
           top: 20,
           left: 15,
           nextuser: next,
           next: whichnext,
           check: check,
+          seeskor:skor ,
         ),
       ],
     ));
