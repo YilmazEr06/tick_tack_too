@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tick_tack_too/screens/modescrenn/modescreen.dart';
 import 'package:tick_tack_too/screens/offlinemodescreen/offlinemodescreen.dart';
+import 'package:tick_tack_too/screens/onlinemode/login.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
@@ -26,6 +27,8 @@ class MyApp extends StatelessWidget {
       '/modes':(context)=>modescreen(),
       '/offline':(context)=>Offlinemodescreen(),
       '/online':(context)=>Offlinemodescreen(),
+      '/login':(context)=>loginpage(),
+    
     },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

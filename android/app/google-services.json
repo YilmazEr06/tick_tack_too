@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "994018426562",
+    "project_id": "tick-tack-too-2853c",
+    "storage_bucket": "tick-tack-too-2853c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994018426562:android:b71e66fdab531bf728455b",
+        "android_client_info": {
+          "package_name": "com.example.tick_tack_too"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0MOJXoQeyLC1g1Mq0BR8_bLzcSLfb33w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,7 +11,12 @@ class modescreen extends StatefulWidget {
 }
 
 // ignore: camel_case_types
-class modescreenstate extends State<modescreen> {
+class modescreenstate extends State<modescreen> with WidgetsBindingObserver{
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+  }
  
   @override
   Widget build(BuildContext context) {

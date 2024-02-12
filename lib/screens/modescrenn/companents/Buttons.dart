@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tick_tack_too/firebase/firebase.dart';
+import 'package:tick_tack_too/screens/onlinemode/login.dart';
 
 class Buttons extends StatelessWidget {
   const Buttons({
@@ -26,7 +29,11 @@ class Buttons extends StatelessWidget {
                       width: 4.0,
                       color: Color.fromARGB(58, 51, 49, 49),
                     )),
-                  onPressed: () {},
+                  onPressed: () {
+                    //(FirebaseAuth.instance.currentUser != null) ? ():
+                  
+                    Navigator.pushReplacementNamed(context, "/login");
+                  },
                   child:const Text(
                     " Çevrimiçi Mod ",
                     style: TextStyle(
