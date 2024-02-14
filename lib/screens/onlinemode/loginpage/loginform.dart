@@ -1,57 +1,48 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:tick_tack_too/firebase/firebase.dart';
 
-class registerform extends StatefulWidget {
-  const registerform({
+class LoginForm extends StatefulWidget {
+  const LoginForm({
     super.key,
     required this.width,
     required this.height,
     required this.changeform,
   });
-  final void Function(bool) changeform;
+
   final double width;
   final double height;
+  final void Function(bool) changeform;
 
   @override
-  State<registerform> createState() => _registerformState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
-class _registerformState extends State<registerform> {
-  final formkey = GlobalKey<FormState>();
-  TextEditingController controllerpassword1 = TextEditingController();
-  TextEditingController controllerusername = TextEditingController();
-  TextEditingController controllerpassword2 = TextEditingController();
-  TextEditingController controlleremail = TextEditingController();
+class _LoginFormState extends State<LoginForm> {
+  bool isloginform = true;
+  final _formKey = GlobalKey<FormState>();
+  final controlleremail = TextEditingController();
+  final controllerpassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Positioned(
         top: 200,
         width: widget.width,
-        height: widget.height * 0.7,
+        height: widget.height * 0.6,
         child: Container(
             color: Color.fromARGB(0, 33, 149, 243),
             child: Column(
               children: [
                 Form(
-                  key: formkey,
+                  key: _formKey,
                   child: Column(
                     children: [
                       textformfield(
                           validator: (value) {
-                            if (value!.length < 5 || value.contains(" ")) {
-                              return "Kullanıcı adı en az 5 karakterden oluşmalı ve ' ' içermemelidir!";
+                            if (!value!.contains("@") || !value.contains(".")) {
+                              return "geçerli deği '@' ve '.' içrmeli";
                             } else {
                               return null;
-                            }
-                          },
-                          labeltext: "Kullanıcı adı",
-                          controller: controllerusername),
-                      textformfield(
-                          validator: (value) {
-                            if (value!.contains("@")||value.contains(".")) {
-                              return null;
-                            } else {
-                              return "Geçersiz format";
                             }
                           },
                           labeltext: "E posta",
@@ -65,19 +56,9 @@ class _registerformState extends State<registerform> {
                             }
                           },
                           labeltext: "Şifre",
-                          controller: controllerpassword1),
-                      textformfield(
-                          validator: (value) {
-                            if (value == controllerpassword1.text) {
-                              return null;
-                            } else {
-                              return "Şifreler eşleşmiyor";
-                            }
-                          },
-                          labeltext: "Yeniden şifre",
-                          controller: controllerpassword2),
+                          controller: controllerpassword),
                       Padding(
-                        padding: const EdgeInsets.only(top: 30),
+                        padding: const EdgeInsets.only(top: 40),
                         child: Column(
                           children: [
                             ElevatedButton(
@@ -87,17 +68,24 @@ class _registerformState extends State<registerform> {
                                     backgroundColor:
                                         MaterialStateProperty.all<Color>(
                                             const Color.fromARGB(
-                                                86, 255, 254, 253)),
+                                                20, 255, 255, 255)),
                                     shape: MaterialStateProperty.all<
                                             RoundedRectangleBorder>(
                                         const RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.all(Radius.circular(50)),
-                                            side: BorderSide(color: Color.fromARGB(255, 93, 93, 93))))),
+                                            side: BorderSide(color: Color.fromARGB(204, 161, 194, 33))))),
                                 onPressed: () {
-                                  if (formkey.currentState!.validate()) {}
+                                  if (_formKey.currentState!.validate()) {
+                                    firebasehlp().loginWithemailAndPassword(controlleremail.text,controllerpassword.text).then((value) {
+                                      if (value== "succes"){
+                                        Navigator.pushNamedAndRemoveUntil(context, "/activeusers", (route) => false);
+                                      }
+                                    },);
+                                    print("object");
+                                  }
                                 },
-                                child: Text("Kaydol".toUpperCase(), style: const TextStyle(fontFamily: "ProtestRevolution-Regular", fontSize: 30, color: Color.fromARGB(166, 0, 0, 0)))),
+                                child: Text("Gırış".toUpperCase(), style: const TextStyle(fontFamily: "ProtestRevolution-Regular", fontSize: 30, color: Color.fromARGB(166, 0, 0, 0), fontWeight: FontWeight.bold))),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 8.0),
@@ -110,9 +98,9 @@ class _registerformState extends State<registerform> {
                                             color: Color.fromARGB(173, 0, 0, 0),
                                             fontFamily:
                                                 "ProtestRevolution-Regular"),
-                                        text: 'Hesabın varmı '),
+                                        text: 'Hesabın yokmu '),
                                     TextSpan(
-                                        text: 'hemen giriş yap!!',
+                                        text: 'hemen oluştur!!',
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black,
@@ -120,9 +108,9 @@ class _registerformState extends State<registerform> {
                                                 "ProtestRevolution-Regular"),
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () {
-                                            widget.changeform(true);
+                                            widget.changeform(false);
 
-                                            print('Hesabın ');
+                                            print('kaydol"');
                                           }),
                                   ],
                                 ),
@@ -181,7 +169,6 @@ class textformfield extends StatelessWidget {
             ),
           ),
         ),
-        
       ),
     );
   }

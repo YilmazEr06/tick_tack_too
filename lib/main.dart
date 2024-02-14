@@ -1,8 +1,11 @@
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tick_tack_too/firebase_options.dart';
 import 'package:tick_tack_too/screens/modescrenn/modescreen.dart';
 import 'package:tick_tack_too/screens/offlinemodescreen/offlinemodescreen.dart';
-import 'package:tick_tack_too/screens/onlinemode/login.dart';
+import 'package:tick_tack_too/screens/onlinemode/active_users_page/activeusers.dart';
+import 'package:tick_tack_too/screens/onlinemode/loginpage/login.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
@@ -13,6 +16,9 @@ Future<void> main() async {
     WindowManager.instance.setMinimumSize(const Size(600, 800));
     WindowManager.instance.setMaximumSize(const Size(600, 800));
   }
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(const MyApp());
 }
 
@@ -24,10 +30,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-      '/modes':(context)=>modescreen(),
-      '/offline':(context)=>Offlinemodescreen(),
-      '/online':(context)=>Offlinemodescreen(),
-      '/login':(context)=>loginpage(),
+      '/modes':(context)=>const modescreen(),
+      '/offline':(context)=>const Offlinemodescreen(),
+      '/online':(context)=>const Offlinemodescreen(),
+      '/login':(context)=>const loginpage(),
+      '/activeusers':(context)=>const Activeusers()
     
     },
       debugShowCheckedModeBanner: false,

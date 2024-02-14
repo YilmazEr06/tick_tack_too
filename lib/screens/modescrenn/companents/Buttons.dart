@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 
@@ -28,9 +29,9 @@ class Buttons extends StatelessWidget {
                       color: Color.fromARGB(58, 51, 49, 49),
                     )),
                   onPressed: () {
-                    //(FirebaseAuth.instance.currentUser != null) ? ():
-                  
-                    Navigator.pushReplacementNamed(context, "/login");
+                  (FirebaseAuth.instance.currentUser != null) ? 
+                  (Navigator.pushReplacementNamed(context, "/activeusers")):
+                  Navigator.pushReplacementNamed(context, "/login");
                   },
                   child:const Text(
                     " Çevrimiçi Mod ",

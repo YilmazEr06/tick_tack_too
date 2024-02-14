@@ -14,7 +14,7 @@ class modescreen extends StatefulWidget {
 class modescreenstate extends State<modescreen> with WidgetsBindingObserver{
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    // TODO: implement didChangeAppLifecycleState
+
     super.didChangeAppLifecycleState(state);
   }
  

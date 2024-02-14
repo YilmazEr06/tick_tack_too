@@ -1,11 +1,13 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tick_tack_too/models/user.dart';
 
 class firebasehlp {
   bool a = false;
 
   Stream<User?> get getstatus {
-   var  astream= FirebaseAuth.instance.authStateChanges();
+    var astream = FirebaseAuth.instance.authStateChanges();
     return astream;
   }
 
@@ -13,18 +15,31 @@ class firebasehlp {
     String user = (FirebaseAuth.instance.currentUser == null)
         ? ""
         : FirebaseAuth.instance.currentUser!.uid;
-
     return user;
   }
 
-  Future<List<Object>> createuserWithemailandPassword(
-      String emailAddress, String password) async {
+  Future<List<Object>> createuserWithemailandPasswordanduserobject(
+      String emailAddress, String password,Usermodel user) async {
+    FirebaseFirestore db = FirebaseFirestore.instance;
     try {
-     UserCredential a = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential a =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
-      return ["succes",a];
+
+      db
+          .collection("Users")
+          .doc(a.user!.uid.toString())
+          .set(user.toFirestore())
+          .onError((e, _) => print("Error writing document: $e"));
+
+
+      
+      return ["succes", a];
+
+
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return ['The password provided is too weak.'];

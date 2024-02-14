@@ -1,41 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:tick_tack_too/companents/xando/oanimated.dart';
 import 'package:tick_tack_too/companents/xando/xanimated.dart';
-import 'package:tick_tack_too/screens/onlinemode/companents/login_bar.dart';
-import 'package:tick_tack_too/screens/onlinemode/companents/loginform.dart';
-import 'package:tick_tack_too/screens/onlinemode/companents/registerform.dart';
+import 'package:tick_tack_too/firebase/firebase.dart';
+import 'package:tick_tack_too/screens/offlinemodescreen/companents/offline_mode_bar.dart';
+import 'package:tick_tack_too/screens/onlinemode/active_users_page/companents/users_bar.dart';
 
-class loginpage extends StatefulWidget {
-  const loginpage({super.key});
+
+class Activeusers extends StatefulWidget {
+  const Activeusers({super.key});
   @override
-  State<loginpage> createState() => modescreenstate();
+  State<Activeusers> createState() => modescreenstate();
 }
 
-class modescreenstate extends State<loginpage> {
-  @override
-  void initState() {
-    super.initState();
-  }
+// ignore: camel_case_types
+class modescreenstate extends State<Activeusers> {
+ 
 
-
-  bool isloginform = true;
 
   @override
   Widget build(BuildContext context) {
-    changeform(bool status) {
-      setState(() {
-        isloginform = status;
-        print(status);
-      });
-    }
-
     double width = MediaQuery.sizeOf(context).width;
     double height = MediaQuery.sizeOf(context).height;
+  
 
     return Scaffold(
         body: Stack(
       fit: StackFit.expand,
       children: [
+        
         createx(
             top: height * 0.2,
             left: width * 0.05,
@@ -96,14 +88,17 @@ class modescreenstate extends State<loginpage> {
             maxsize: 100,
             minsize: 80,
             colors: const [Colors.yellow, Colors.black]),
-        const loginbar(),
+        const Loginusersbar(),
+        Positioned(
+          top: 150,
+          left: 150,
+          child: ElevatedButton(onPressed: () {
+            firebasehlp().logout();
+            Navigator.pushNamedAndRemoveUntil(context, "/modes", (route) => false);
+          
+        }, child: Text("çıkış")))
         
-          isloginform  ? LoginForm(
-                width: width,
-                height: height,
-                changeform: changeform,
-              )
-            : registerform(width: width, height: height,changeform: changeform),
+      
       ],
     ));
   }
