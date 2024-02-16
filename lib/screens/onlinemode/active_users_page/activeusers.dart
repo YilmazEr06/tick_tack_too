@@ -1,10 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tick_tack_too/companents/xando/oanimated.dart';
 import 'package:tick_tack_too/companents/xando/xanimated.dart';
 import 'package:tick_tack_too/firebase/firebase.dart';
-import 'package:tick_tack_too/screens/offlinemodescreen/companents/offline_mode_bar.dart';
-import 'package:tick_tack_too/screens/onlinemode/active_users_page/companents/users_bar.dart';
+import 'package:tick_tack_too/screens/onlinemode/active_users_page/companents/mailicon.dart';
+import 'package:tick_tack_too/screens/onlinemode/active_users_page/companents/userlist.dart';
 
+import 'package:tick_tack_too/screens/onlinemode/active_users_page/companents/users_bar.dart';
 
 class Activeusers extends StatefulWidget {
   const Activeusers({super.key});
@@ -14,20 +16,21 @@ class Activeusers extends StatefulWidget {
 
 // ignore: camel_case_types
 class modescreenstate extends State<Activeusers> {
- 
-
+  @override
+  void initState() {
+    print(firebasehlp().currentuserid);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.sizeOf(context).width;
     double height = MediaQuery.sizeOf(context).height;
-  
 
     return Scaffold(
         body: Stack(
       fit: StackFit.expand,
       children: [
-        
         createx(
             top: height * 0.2,
             left: width * 0.05,
@@ -89,16 +92,35 @@ class modescreenstate extends State<Activeusers> {
             minsize: 80,
             colors: const [Colors.yellow, Colors.black]),
         const Loginusersbar(),
+        MailIicon(width: width, height: height),
         Positioned(
-          top: 150,
-          left: 150,
-          child: ElevatedButton(onPressed: () {
-            firebasehlp().logout();
-            Navigator.pushNamedAndRemoveUntil(context, "/modes", (route) => false);
-          
-        }, child: Text("çıkış")))
-        
-      
+            top: 150,
+            left: 150,
+            child: ElevatedButton(
+                onPressed: () {
+                  firebasehlp().logout();
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/modes", (route) => false);
+                },
+                child: const Text("çıkış"))),
+        const userlist(),
+        Positioned(
+          left: width-330,
+          top: height-75,
+          child: const Column(
+            children: [
+              Text("Davet etmek istediğiniz",style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "ProtestRevolution-Regular"),),
+              Text("kullanıcıya dokunun",style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "ProtestRevolution-Regular"),),
+            ],
+          ))
       ],
     ));
   }
