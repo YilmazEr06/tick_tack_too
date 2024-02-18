@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:tick_tack_too/screens/offlinemodescreen/companents/offlineizgara.dart';
+import 'package:tick_tack_too/firebase/firebase.dart';
 import 'package:tick_tack_too/companents/xando/oanimated.dart';
 import 'package:tick_tack_too/companents/xando/xanimated.dart';
-import 'package:tick_tack_too/screens/offlinemodescreen/companents/offline_mode_bar.dart';
-import 'package:tick_tack_too/screens/offlinemodescreen/companents/sequence.dart';
 
-class Offlinemodescreen extends StatefulWidget {
-  const Offlinemodescreen({super.key});
+import 'package:tick_tack_too/screens/onlinemode/gamescreen/companents/offline_mode_bar.dart';
+import 'package:tick_tack_too/screens/onlinemode/gamescreen/companents/sequence.dart';
+
+import 'companents/onlineiizgara.dart';
+
+class screen extends StatefulWidget {
+  const screen({super.key});
   @override
-  State<Offlinemodescreen> createState() => modescreenstate();
+  State<screen> createState() => modescreenstate();
 }
 
 // ignore: camel_case_types
-class modescreenstate extends State<Offlinemodescreen> {
+class modescreenstate extends State<screen> {
   bool whichnext = false;
   int skoro=0;
-   int skorx=0;
+  int skorx=0;
   @override
   void initState() {
     super.initState();
@@ -43,7 +46,7 @@ class modescreenstate extends State<Offlinemodescreen> {
        skorx=map["x"];
       });
     }
-
+   
     return Scaffold(
         body: Stack(
       fit: StackFit.expand,
@@ -109,9 +112,9 @@ class modescreenstate extends State<Offlinemodescreen> {
             maxsize: 100,
             minsize: 80,
             colors: const [Colors.yellow, Colors.black]),
-        const logo(),
-        sequencebar(whichnext: whichnext,skorx: skorx,skoro: skoro,),
-        createizgara(
+        const onlinegamelogo(),
+        Onlinesequencebar(whichnext: whichnext,skorx: skorx,skoro: skoro,),
+        createonlineizgara(
           top: 20,
           left: 15,
           nextuser: next,

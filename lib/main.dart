@@ -5,6 +5,7 @@ import 'package:tick_tack_too/firebase_options.dart';
 import 'package:tick_tack_too/screens/modescrenn/modescreen.dart';
 import 'package:tick_tack_too/screens/offlinemodescreen/offlinemodescreen.dart';
 import 'package:tick_tack_too/screens/onlinemode/active_users_page/activeusers.dart';
+import 'package:tick_tack_too/screens/onlinemode/gamescreen/screen.dart';
 import 'package:tick_tack_too/screens/onlinemode/loginpage/login.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget with WidgetsBindingObserver{
       '/offline':(context)=>const Offlinemodescreen(),
       '/online':(context)=>const Offlinemodescreen(),
       '/login':(context)=>const loginpage(),
-      '/activeusers':(context)=>const Activeusers()
+      '/activeusers':(context)=>const Activeusers(),
+      '/onlineoyun':(context)=>const screen()
     
     },
       debugShowCheckedModeBanner: false,

@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tick_tack_too/companents/xando/oanimated.dart';
 import 'package:tick_tack_too/companents/xando/xanimated.dart';
 import 'package:tick_tack_too/firebase/firebase.dart';
@@ -24,8 +24,27 @@ class modescreenstate extends State<Activeusers> {
 
   @override
   Widget build(BuildContext context) {
+    firebasehlp().getgamechange().listen((event) {
+      if(event.data()!["current game"].toString().isNotEmpty){
+        print("hello ben bir oyundayım");
+         Fluttertoast.showToast(
+        msg: "Oyun başlıyor",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+
+    );
+    Navigator.pushNamedAndRemoveUntil(context, '/onlineoyun', (route) => false);
+      }
+    });
+   
+    
     double width = MediaQuery.sizeOf(context).width;
     double height = MediaQuery.sizeOf(context).height;
+    
 
     return Scaffold(
         body: Stack(
@@ -93,35 +112,62 @@ class modescreenstate extends State<Activeusers> {
             colors: const [Colors.yellow, Colors.black]),
         const Loginusersbar(),
         MailIicon(width: width, height: height),
-        Positioned(
-            top: 150,
-            left: 150,
-            child: ElevatedButton(
-                onPressed: () {
-                  firebasehlp().logout();
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, "/modes", (route) => false);
-                },
-                child: const Text("çıkış"))),
+        const button(),
         const userlist(),
-        Positioned(
-          left: width-330,
-          top: height-75,
-          child: const Column(
-            children: [
-              Text("Davet etmek istediğiniz",style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "ProtestRevolution-Regular"),),
-              Text("kullanıcıya dokunun",style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "ProtestRevolution-Regular"),),
-            ],
-          ))
+        text(width: width, height: height)
       ],
     ));
+  }
+}
+
+class button extends StatelessWidget {
+  const button({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+        top: 150,
+        left: 150,
+        child: ElevatedButton(
+            onPressed: () {
+              firebasehlp().logout();
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/modes", (route) => false);
+            },
+            child: const Text("çıkış")));
+  }
+}
+
+class text extends StatelessWidget {
+  const text({
+    super.key,
+    required this.width,
+    required this.height,
+  });
+
+  final double width;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: width-330,
+      top: height-75,
+      child: const Column(
+        children: [
+          Text("Davet etmek istediğiniz",style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontFamily: "ProtestRevolution-Regular"),),
+          Text("kullanıcıya dokunun",style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              fontFamily: "ProtestRevolution-Regular"),),
+        ],
+      ));
   }
 }

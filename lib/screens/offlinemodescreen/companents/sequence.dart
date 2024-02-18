@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tick_tack_too/firebase/firebase.dart';
 
 class sequencebar extends StatefulWidget {
   const sequencebar({
@@ -15,13 +16,12 @@ class sequencebar extends StatefulWidget {
 }
 
 class _sequencebarState extends State<sequencebar> {
-  @override
-  void initState() {
 
-    super.initState();
-  }
+ 
   @override
   Widget build(BuildContext context) {
+
+
     return Positioned(
       height: 150,
       width: MediaQuery.of(context).size.width,

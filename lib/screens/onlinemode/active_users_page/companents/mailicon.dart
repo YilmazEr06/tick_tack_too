@@ -147,7 +147,13 @@ class _listState extends State<list> {
               child: Row(
                 children: [
                   GestureDetector(
-                      onTap: () {},
+                    
+                      onTap: () {
+                        firebasehlp().creategame(firebasehlp().currentuserid,userData["id"]);
+                         setState(() {
+                          widget.userDataList.remove(userData);
+                        });
+                      },
                       child: const Icon(
                         Icons.check_rounded,
                         color: Colors.black,
